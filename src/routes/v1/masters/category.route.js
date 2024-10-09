@@ -1,38 +1,38 @@
 const express = require('express');
-const auth = require('../../middlewares/auth');
-const validate = require('../../middlewares/validate');
-const userValidation = require('../../validations/user.validation');
-const userController = require('../../controllers/user.controller');
+const auth = require('../../../middlewares/auth');
+const validate = require('../../../middlewares/validate');
+const { categoryValidation } = require('../../../validations');
+const { categoryController } = require('../../../controllers');
 
 const router = express.Router();
 
 router
   .route('/')
-  .post(auth('admin', 'user'), validate(userValidation.createUser), userController.createUser)
-  .get(auth('admin', 'user'), validate(userValidation.getUsers), userController.getUsers);
+  .post(auth('admin', 'user'), validate(categoryValidation.createCategory), categoryController.createCategory)
+  .get(auth('admin', 'user'), validate(categoryValidation.getCategories), categoryController.queryCategorys);
 
 router
   .route('/:userId')
-  .get(auth('admin', 'user'), validate(userValidation.getUser), userController.getUser)
-  .patch(auth('admin', 'user'), validate(userValidation.updateUser), userController.updateUser)
-  .delete(auth('admin', 'user'), validate(userValidation.deleteUser), userController.deleteUser);
+  .get(auth('admin', 'user'), validate(categoryValidation.getCategoryById), categoryController.getCategoryById)
+  .patch(auth('admin', 'user'), validate(categoryValidation.updateCategoryById), categoryController.updateCategoryById)
+  .delete(auth('admin', 'user'), validate(categoryValidation.deleteCategoryById), categoryController.deleteCategoryById);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: Users
- *   description: User management and retrieval
+ *   name: Category
+ *   description: category management and retrieval
  */
 
 /**
  * @swagger
- * /users:
+ * /category:
  *   post:
- *     summary: Create a user
- *     description: Only admins can create other users.
- *     tags: [Users]
+ *     summary: Create a category
+ *     description: Only admins can create other category.
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -43,47 +43,31 @@ module.exports = router;
  *             type: object
  *             required:
  *               - name
- *               - email
- *               - password
- *               - role
  *             properties:
  *               name:
  *                 type: string
- *               email:
+ *               description:
  *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *               role:
- *                  type: string
- *                  enum: [user, admin]
+ *                 format: text
  *             example:
  *               name: fake name
- *               email: fake@example.com
- *               password: password1
- *               role: user
+ *               description: sdfghj
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
+ *                $ref: '#/components/schemas/Category'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all users
- *     description: Only admins can retrieve all users.
- *     tags: [Users]
+ *     summary: Get all category
+ *     description: Only admins can retrieve allcategory.
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -92,11 +76,6 @@ module.exports = router;
  *         schema:
  *           type: string
  *         description: User name
- *       - in: query
- *         name: role
- *         schema:
- *           type: string
- *         description: User role
  *       - in: query
  *         name: sortBy
  *         schema:
@@ -127,7 +106,7 @@ module.exports = router;
  *                 results:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/User'
+ *                     $ref: '#/components/schemas/Category'
  *                 page:
  *                   type: integer
  *                   example: 1
@@ -148,27 +127,27 @@ module.exports = router;
 
 /**
  * @swagger
- * /users/{id}:
+ * /category/{id}:
  *   get:
- *     summary: Get a user
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Users]
+ *     summary: Get a category
+ *     description: Logged in category can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: categoryId
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: Category id
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
+ *                $ref: '#/components/schemas/Category'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -177,18 +156,18 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a user
- *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Users]
+ *     summary: Update a Category
+ *     description: Logged in Category can only update their own information. Only admins can update other users.
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: categoryId
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: Category id
  *     requestBody:
  *       required: true
  *       content:
@@ -198,26 +177,19 @@ module.exports = router;
  *             properties:
  *               name:
  *                 type: string
- *               email:
+ *               description:
  *                 type: string
- *                 format: email
- *                 description: must be unique
- *               password:
- *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
+ *                 format: text
  *             example:
  *               name: fake name
- *               email: fake@example.com
- *               password: password1
+ *               description: password1
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
+ *                $ref: '#/components/schemas/Category'
  *       "400":
  *         $ref: '#/components/responses/DuplicateEmail'
  *       "401":
@@ -228,18 +200,18 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a user
+ *     summary: Delete a Category
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Users]
+ *     tags: [Category]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: id
+ *         name: categoryId
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: category id
  *     responses:
  *       "200":
  *         description: No content
