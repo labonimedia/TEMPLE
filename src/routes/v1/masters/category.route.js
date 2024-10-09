@@ -12,7 +12,7 @@ router
   .get(auth('admin', 'user'), validate(categoryValidation.getCategories), categoryController.queryCategorys);
 
 router
-  .route('/:userId')
+  .route('/:categoryId')
   .get(auth('admin', 'user'), validate(categoryValidation.getCategoryById), categoryController.getCategoryById)
   .patch(auth('admin', 'user'), validate(categoryValidation.updateCategoryById), categoryController.updateCategoryById)
   .delete(auth('admin', 'user'), validate(categoryValidation.deleteCategoryById), categoryController.deleteCategoryById);
