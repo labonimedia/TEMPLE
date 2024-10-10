@@ -1,38 +1,38 @@
 const express = require('express');
 const auth = require('../../../middlewares/auth');
 const validate = require('../../../middlewares/validate');
-const { categoryValidation } = require('../../../validations');
-const { categoryController } = require('../../../controllers');
+const { subcategoryValidation } = require('../../../validations');
+const { subcategoryController } = require('../../../controllers');
 
 const router = express.Router();
 
 router
   .route('/')
-  .post(auth('admin', 'user'), validate(categoryValidation.createCategory), categoryController.createCategory)
-  .get(auth('admin', 'user'), validate(categoryValidation.getCategories), categoryController.queryCategorys);
+  .post(auth('admin', 'user'), validate(subcategoryValidation.createCategory), subcategoryController.createSubCategory)
+  .get(auth('admin', 'user'), validate(subcategoryValidation.getCategories), subcategoryController.querySubCategorys);
 
 router
-  .route('/:categoryId')
-  .get(auth('admin', 'user'), validate(categoryValidation.getCategoryById), categoryController.getCategoryById)
-  .patch(auth('admin', 'user'), validate(categoryValidation.updateCategoryById), categoryController.updateCategoryById)
-  .delete(auth('admin', 'user'), validate(categoryValidation.deleteCategoryById), categoryController.deleteCategoryById);
+  .route('/:subCategoryId')
+  .get(auth('admin', 'user'), validate(subcategoryValidation.getCategoryById), subcategoryController.getSubCategoryById)
+  .patch(auth('admin', 'user'), validate(subcategoryValidation.updateCategoryById), subcategoryController.updateSubCategoryById)
+  .delete(auth('admin', 'user'), validate(subcategoryValidation.deleteCategoryById), subcategoryController.deleteSubCategoryById);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: Category
+ *   name: SubCategory
  *   description: category management and retrieval
  */
 
 /**
  * @swagger
- * /category:
+ * /sub-category:
  *   post:
  *     summary: Create a category
  *     description: Only admins can create other category.
- *     tags: [Category]
+ *     tags: [SubCategory]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -46,11 +46,17 @@ module.exports = router;
  *             properties:
  *               name:
  *                 type: string
+ *               categoryId:
+ *                 type: string
+ *               language:
+ *                 type: string
  *               description:
  *                 type: string
  *                 format: text
  *             example:
  *               name: fake name
+ *               categoryId: fake category
+ *               language: 40
  *               description: sdfghj
  *     responses:
  *       "201":
@@ -67,7 +73,7 @@ module.exports = router;
  *   get:
  *     summary: Get all category
  *     description: Only admins can retrieve allcategory.
- *     tags: [Category]
+ *     tags: [SubCategory]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -127,16 +133,16 @@ module.exports = router;
 
 /**
  * @swagger
- * /category/{categoryId}:
+ * /sub-category/{subCategoryId}:
  *   get:
  *     summary: Get a category
  *     description: Logged in category can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Category]
+ *     tags: [SubCategory]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: categoryId
+ *         name: subCategoryId
  *         required: true
  *         schema:
  *           type: string
@@ -158,12 +164,12 @@ module.exports = router;
  *   patch:
  *     summary: Update a Category
  *     description: Logged in Category can only update their own information. Only admins can update other users.
- *     tags: [Category]
+ *     tags: [SubCategory]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: categoryId
+ *         name: subCategoryId
  *         required: true
  *         schema:
  *           type: string
@@ -177,11 +183,17 @@ module.exports = router;
  *             properties:
  *               name:
  *                 type: string
+ *               categoryId:
+ *                 type: string
+ *               language:
+ *                 type: string
  *               description:
  *                 type: string
  *                 format: text
  *             example:
  *               name: fake name
+ *               categoryId: fake category
+ *               language: 20
  *               description: password1
  *     responses:
  *       "200":
@@ -202,12 +214,12 @@ module.exports = router;
  *   delete:
  *     summary: Delete a Category
  *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Category]
+ *     tags: [SubCategory]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: path
- *         name: categoryId
+ *         name: subCategoryId
  *         required: true
  *         schema:
  *           type: string
