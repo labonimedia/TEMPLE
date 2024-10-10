@@ -41,7 +41,7 @@ const getSubCategoryById = async (id) => {
  * @returns {Promise<SubCategory>}
  */
 const updateSubCategoryById = async (CategoryId, updateBody) => {
-  const category = await getCategoryById(CategoryId);
+  const category = await getSubCategoryById(CategoryId);
   if (!category) {
     throw new ApiError(httpStatus.NOT_FOUND, 'SubCategory not found');
   }
