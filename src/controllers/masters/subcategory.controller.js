@@ -23,6 +23,13 @@ const getSubCategoryById = catchAsync(async (req, res) => {
   }
   res.send(category);
 });
+const getCategoryById = catchAsync(async (req, res) => {
+  const category = await subcategoryService.getCategoryById(req.params.categoryId);
+  if (!category) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Sub Caegory not found');
+  }
+  res.send(category);
+});
 
 const updateSubCategoryById = catchAsync(async (req, res) => {
   const category = await subcategoryService.updateSubCategoryById(req.params.subCategoryId, req.body);
@@ -38,6 +45,7 @@ module.exports = {
   createSubCategory,
   querySubCategorys,
   getSubCategoryById,
+  getCategoryById,
   updateSubCategoryById,
   deleteSubCategoryById,
 };
