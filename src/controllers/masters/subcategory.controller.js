@@ -35,7 +35,7 @@ const deleteSubCategoryById = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-    createSubCategory,
+  createSubCategory,
   querySubCategorys,
   getSubCategoryById,
   updateSubCategoryById,
