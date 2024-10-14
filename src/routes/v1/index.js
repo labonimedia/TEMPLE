@@ -31,7 +31,7 @@ const defaultRoutes = [
   {
     path: '/deity',
     route: deityRoute,
-  }
+  },
 ];
 
 const devRoutes = [

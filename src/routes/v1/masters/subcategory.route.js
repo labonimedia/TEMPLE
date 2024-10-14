@@ -25,9 +25,9 @@ router
     subcategoryController.deleteSubCategoryById
   );
 
-  router
+router
   .route('/get-subcategory/:categoryId')
-  .get(auth('admin', 'user'), validate(subcategoryValidation.getByCategoryId), subcategoryController.getCategoryById)
+  .get(auth('admin', 'user'), validate(subcategoryValidation.getByCategoryId), subcategoryController.getCategoryById);
 
 module.exports = router;
 

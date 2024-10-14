@@ -16,7 +16,6 @@ const getDeityById = {
   }),
 };
 
-
 const deleteDeityById = {
   params: Joi.object().keys({
     deityId: Joi.string().custom(objectId),
@@ -24,7 +23,7 @@ const deleteDeityById = {
 };
 
 module.exports = {
-    getDeitys,
+  getDeitys,
   getDeityById,
   deleteDeityById,
 };
