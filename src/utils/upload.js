@@ -25,7 +25,7 @@ const uploadFile = async (file) => {
   // eslint-disable-next-line no-useless-catch
   try {
     await s3Client.send(command);
-    return `https://lmscontent-cdn.blr1.digitaloceanspaces.com/b2b/temple/${params.Key}`;
+    return `https://lmscontent-cdn.blr1.digitaloceanspaces.com/temple/${params.Key}`;
   } catch (err) {
     throw err; // Rethrow the error after logging it
   }
