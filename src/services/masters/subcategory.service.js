@@ -35,6 +35,14 @@ const getSubCategoryById = async (id) => {
 };
 
 /**
+ * Get SubCategory by id
+ * @param {ObjectId} id
+ * @returns {Promise<SubCategory>}
+ */
+const getCategoryById = async (categoryId) => {
+  return SubCategory.find({categoryId});
+};
+/**
  * Update SubCategory by id
  * @param {ObjectId} CategoryId
  * @param {Object} updateBody
@@ -68,6 +76,7 @@ module.exports = {
   createSubCategory,
   querySubCategorys,
   getSubCategoryById,
+  getCategoryById,
   updateSubCategoryById,
   deleteSubCategoryById,
 };
