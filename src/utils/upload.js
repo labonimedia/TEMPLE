@@ -11,7 +11,6 @@ ffmpeg.setFfmpegPath(ffmpegPath);
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-
 const uploadFile = async (file) => {
   const params = {
     Bucket: 'b2b',
@@ -20,12 +19,11 @@ const uploadFile = async (file) => {
     ACL: 'public-read',
   };
 
-
   const command = new PutObjectCommand(params);
   // eslint-disable-next-line no-useless-catch
   try {
     await s3Client.send(command);
-    return `https://lmscontent-cdn.blr1.digitaloceanspaces.com/b2b/temple/${params.Key}`;
+    return `https://lmscontent-cdn.blr1.digitaloceanspaces.com/temple/${params.Key}`;
   } catch (err) {
     throw err; // Rethrow the error after logging it
   }

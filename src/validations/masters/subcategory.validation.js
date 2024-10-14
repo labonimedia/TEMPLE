@@ -31,7 +31,6 @@ const getByCategoryId = {
   }),
 };
 
-
 const updateCategoryById = {
   params: Joi.object().keys({
     subCategoryId: Joi.required().custom(objectId),
