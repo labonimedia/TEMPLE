@@ -25,6 +25,13 @@ const getCategoryById = {
   }),
 };
 
+const getByCategoryId = {
+  params: Joi.object().keys({
+    categoryId: Joi.string().custom(objectId),
+  }),
+};
+
+
 const updateCategoryById = {
   params: Joi.object().keys({
     subCategoryId: Joi.required().custom(objectId),
@@ -49,6 +56,7 @@ module.exports = {
   createCategory,
   getCategories,
   getCategoryById,
+  getByCategoryId,
   updateCategoryById,
   deleteCategoryById,
 };

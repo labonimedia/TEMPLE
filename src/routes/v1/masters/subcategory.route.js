@@ -25,6 +25,10 @@ router
     subcategoryController.deleteSubCategoryById
   );
 
+  router
+  .route('/get-subcategory/:categoryId')
+  .get(auth('admin', 'user'), validate(subcategoryValidation.getByCategoryId), subcategoryController.getCategoryById)
+
 module.exports = router;
 
 /**
@@ -235,6 +239,37 @@ module.exports = router;
  *     responses:
  *       "200":
  *         description: No content
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /sub-category/get-subcategory/{categoryId}:
+ *   get:
+ *     summary: Get a category
+ *     description: Logged in category can fetch only their own user information. Only admins can fetch other users.
+ *     tags: [SubCategory]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: categoryId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Category id
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Category'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
