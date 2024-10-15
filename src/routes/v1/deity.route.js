@@ -45,8 +45,8 @@ module.exports = router;
  * @swagger
  * /deity:
  *   post:
- *     summary: Create a category
- *     description: Only admins can create other category.
+ *     summary: Create a deity
+ *     description: Only admins can create a deity.
  *     tags: [Deity]
  *     security:
  *       - bearerAuth: []
@@ -56,55 +56,97 @@ module.exports = router;
  *         multipart/form-data:
  *           schema:
  *             type: object
- *             required:
- *               - name
  *             properties:
- *               name:
+ *               en_name:
  *                 type: string
- *               description:
+ *               en_description:
  *                 type: string
  *                 format: text
- *               iconImage:
- *                 type: string
- *                 format: binary
  *               coverImage:
  *                 type: string
  *                 format: binary
- *               categoryId:
+ *               iconImage:
  *                 type: string
- *               subCategoryId:
+ *                 format: binary
+ *               en_categoryId:
+ *                 type: string
+ *               en_subCategoryId:
+ *                 type: string
+ *               en_introduction:
+ *                 type: string
+ *               en_mythologicalStory:
+ *                 type: string
+ *               en_symbols:
+ *                 type: string
+ *               en_roleSignificance:
+ *                 type: string
+ *               en_festivalsRituals:
+ *                 type: string
+ *               en_templesSites:
+ *                 type: string
+ *               en_significance:
+ *                 type: string
+ *               en_conclusion:
+ *                 type: string
+ *               hd_name:
+ *                 type: string
+ *               hd_description:
  *                 type: string
  *                 format: text
- *               language:
- *                 type: String
- *               discription1:
+ *               hd_categoryId:
  *                 type: string
- *               discription2:
+ *               hd_subCategoryId:
  *                 type: string
- *                 format: text
- *               discription3:
- *                 type: String
- *               discription4:
- *                 type: String
+ *               hd_introduction:
+ *                 type: string
+ *               hd_mythologicalStory:
+ *                 type: string
+ *               hd_symbols:
+ *                 type: string
+ *               hd_roleSignificance:
+ *                 type: string
+ *               hd_festivalsRituals:
+ *                 type: string
+ *               hd_templesSites:
+ *                 type: string
+ *               hd_significance:
+ *                 type: string
+ *               hd_conclusion:
+ *                 type: string
  *             example:
- *               name: fake name
- *               description: sdfghj
- *               iconImage: //ad/aa/a
- *               coverImage: //ad/aa/a
- *               categoryId: 139r789
- *               subCategoryId: 482668
- *               language: "20"
- *               discription1: fake
- *               discription2: fake
- *               discription3: fake
- *               discription4: fake
+ *               en_name: "Example Deity"
+ *               en_description: "Description of the deity."
+ *               coverImage: //example.com/path/to/image
+ *               iconImage: //example.com/path/to/icon
+ *               en_categoryId: "605c72ef27e20d001f1d2a1f"
+ *               en_subCategoryId: "605c72ef27e20d001f1d2a20"
+ *               en_introduction: "Introduction text."
+ *               en_mythologicalStory: "Mythological story text."
+ *               en_symbols: "Symbols associated with the deity."
+ *               en_roleSignificance: "Role and significance of the deity."
+ *               en_festivalsRituals: "Festivals and rituals."
+ *               en_templesSites: "Temples and sites."
+ *               en_significance: "Significance of the deity."
+ *               en_conclusion: "Conclusion about the deity."
+ *               hd_name: "उदाहरण देवता"
+ *               hd_description: "देवता का विवरण।"
+ *               hd_categoryId: "605c72ef27e20d001f1d2a1f"
+ *               hd_subCategoryId: "605c72ef27e20d001f1d2a20"
+ *               hd_introduction: "परिचय पाठ।"
+ *               hd_mythologicalStory: "पौराणिक कहानी पाठ।"
+ *               hd_symbols: "देवता से जुड़े प्रतीक।"
+ *               hd_roleSignificance: "देवता की भूमिका और महत्व।"
+ *               hd_festivalsRituals: "त्योहार और अनुष्ठान।"
+ *               hd_templesSites: "मंदिर और स्थलों।"
+ *               hd_significance: "देवता का महत्व।"
+ *               hd_conclusion: "देवता के बारे में निष्कर्ष।"
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Category'
+ *                $ref: '#/components/schemas/Deity'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
