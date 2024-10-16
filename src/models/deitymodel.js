@@ -20,8 +20,7 @@ const deitySchema = mongoose.Schema(
           ref: 'Category',
         },
         en_subCategoryId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Subcategory',
+          type: String,
         },
         en_introduction: {
           type: String,
@@ -54,12 +53,10 @@ const deitySchema = mongoose.Schema(
           type: String,
         },
         hd_categoryId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Category',
+          type: String,
         },
         hd_subCategoryId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Subcategory',
+          type: String,
         },
 
         hd_introduction: {
