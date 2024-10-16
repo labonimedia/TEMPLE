@@ -11,7 +11,10 @@ router
   .route('/')
   .post(
     auth('admin', 'user'),
-    commonUploadMiddleware([{ name: 'coverImage', maxCount: 1 }, {name: 'iconImage', maxCount:1}]),
+    commonUploadMiddleware([
+      { name: 'coverImage', maxCount: 1 },
+      { name: 'iconImage', maxCount: 1 },
+    ]),
     deityController.createDeity
   )
   .get(auth('admin', 'user'), validate(deityValidation.getDeitys), deityController.queryDeitys);
@@ -19,7 +22,14 @@ router
 router
   .route('/:deityId')
   .get(auth('admin', 'user'), validate(deityValidation.getDeityById), deityController.getDeityById)
-  .patch(auth('admin', 'user'),  commonUploadMiddleware([{ name: 'coverImage', maxCount: 1 }, {name: 'iconImage', maxCount:1}]), deityController.updateDeityById)
+  .patch(
+    auth('admin', 'user'),
+    commonUploadMiddleware([
+      { name: 'coverImage', maxCount: 1 },
+      { name: 'iconImage', maxCount: 1 },
+    ]),
+    deityController.updateDeityById
+  )
   .delete(auth('admin', 'user'), validate(deityValidation.deleteDeityById), deityController.deleteDeityById);
 
 module.exports = router;

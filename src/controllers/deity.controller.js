@@ -5,16 +5,16 @@ const catchAsync = require('../utils/catchAsync');
 const { deityService } = require('../services');
 
 const createDeity = catchAsync(async (req, res) => {
-    if (req.body.iconImage ) {
-        const iconImageUrl = req.body.iconImage[0];
-        const iconImagePath = new URL(iconImageUrl).pathname;
-        req.body.iconImage = iconImagePath;
-      }
-      if(req.body.coverImage){
-        const coverImageUrl = req.body.coverImage[0];
-        const coverImagePath = new URL(coverImageUrl).pathname;
-        req.body.coverImage = coverImagePath
-      }
+  if (req.body.iconImage) {
+    const iconImageUrl = req.body.iconImage[0];
+    const iconImagePath = new URL(iconImageUrl).pathname;
+    req.body.iconImage = iconImagePath;
+  }
+  if (req.body.coverImage) {
+    const coverImageUrl = req.body.coverImage[0];
+    const coverImagePath = new URL(coverImageUrl).pathname;
+    req.body.coverImage = coverImagePath;
+  }
   const deity = await deityService.createDeity(req.body);
   res.status(httpStatus.CREATED).send(deity);
 });
@@ -35,17 +35,16 @@ const getDeityById = catchAsync(async (req, res) => {
 });
 
 const updateDeityById = catchAsync(async (req, res) => {
-
-    if (req.body.iconImage ) {
-        const iconImageUrl = req.body.iconImage[0];
-        const iconImagePath = new URL(iconImageUrl).pathname;
-        req.body.iconImage = iconImagePath;
-      }
-      if(req.body.coverImage){
-        const coverImageUrl = req.body.coverImage[0];
-        const coverImagePath = new URL(coverImageUrl).pathname;
-        req.body.coverImage = coverImagePath
-      }
+  if (req.body.iconImage) {
+    const iconImageUrl = req.body.iconImage[0];
+    const iconImagePath = new URL(iconImageUrl).pathname;
+    req.body.iconImage = iconImagePath;
+  }
+  if (req.body.coverImage) {
+    const coverImageUrl = req.body.coverImage[0];
+    const coverImagePath = new URL(coverImageUrl).pathname;
+    req.body.coverImage = coverImagePath;
+  }
   const deity = await deityService.updateDeityById(req.params.deityId, req.body);
   res.send(deity);
 });
@@ -56,9 +55,9 @@ const deleteDeityById = catchAsync(async (req, res) => {
 });
 
 module.exports = {
-    createDeity,
-    queryDeitys,
-    getDeityById,
-    updateDeityById,
-    deleteDeityById,
+  createDeity,
+  queryDeitys,
+  getDeityById,
+  updateDeityById,
+  deleteDeityById,
 };

@@ -40,7 +40,7 @@ const getSubCategoryById = async (id) => {
  * @returns {Promise<SubCategory>}
  */
 const getCategoryById = async (categoryId) => {
-  return SubCategory.find({categoryId});
+  return SubCategory.find({ categoryId });
 };
 /**
  * Update SubCategory by id

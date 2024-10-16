@@ -11,7 +11,6 @@ ffmpeg.setFfmpegPath(ffmpegPath);
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-
 const uploadFile = async (file) => {
   const params = {
     Bucket: 'b2b',
@@ -19,7 +18,6 @@ const uploadFile = async (file) => {
     Body: file.buffer,
     ACL: 'public-read',
   };
-
 
   const command = new PutObjectCommand(params);
   // eslint-disable-next-line no-useless-catch
