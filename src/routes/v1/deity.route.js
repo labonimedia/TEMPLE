@@ -17,11 +17,11 @@ router
     ]),
     deityController.createDeity
   )
-  .get(auth('admin', 'user'), validate(deityValidation.getDeitys), deityController.queryDeitys);
+  .get( validate(deityValidation.getDeitys), deityController.queryDeitys);
 
 router
   .route('/:deityId')
-  .get(auth('admin', 'user'), validate(deityValidation.getDeityById), deityController.getDeityById)
+  .get( validate(deityValidation.getDeityById), deityController.getDeityById)
   .patch(
     auth('admin', 'user'),
     commonUploadMiddleware([
