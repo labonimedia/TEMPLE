@@ -9,11 +9,11 @@ const router = express.Router();
 router
   .route('/')
   .post(auth('admin', 'user'), validate(categoryValidation.createCategory), categoryController.createCategory)
-  .get( validate(categoryValidation.getCategories), categoryController.queryCategorys);
+  .get(validate(categoryValidation.getCategories), categoryController.queryCategorys);
 
 router
   .route('/:categoryId')
-  .get( validate(categoryValidation.getCategoryById), categoryController.getCategoryById)
+  .get(validate(categoryValidation.getCategoryById), categoryController.getCategoryById)
   .patch(auth('admin', 'user'), validate(categoryValidation.updateCategoryById), categoryController.updateCategoryById)
   .delete(auth('admin', 'user'), validate(categoryValidation.deleteCategoryById), categoryController.deleteCategoryById);
 

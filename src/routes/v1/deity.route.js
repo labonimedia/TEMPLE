@@ -23,7 +23,7 @@ router
 
 router
   .route('/:deityId')
-  .get( validate(deityValidation.getDeityById), deityController.getDeityById)
+  .get(validate(deityValidation.getDeityById), deityController.getDeityById)
   .patch(
     auth('admin', 'user'),
     commonUploadMiddleware([
