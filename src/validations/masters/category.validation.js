@@ -5,6 +5,8 @@ const createCategory = {
   body: Joi.object().keys({
     name: Joi.string().required(),
     description: Joi.string(),
+    hi_name: Joi.string(),
+    hi_description: Joi.string(),
   }),
 };
 
@@ -31,6 +33,8 @@ const updateCategoryById = {
     .keys({
       description: Joi.string(),
       name: Joi.string(),
+      hi_name: Joi.string(),
+      hi_description: Joi.string(),
     })
     .min(1),
 };

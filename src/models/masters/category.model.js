@@ -11,6 +11,12 @@ const categorySchema = mongoose.Schema(
     description: {
       type: String,
     },
+    hi_name: {
+      type: String,
+    },
+    hi_description: {
+      type: String,
+    },
   },
   {
     timestamps: true,

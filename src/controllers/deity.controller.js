@@ -15,6 +15,17 @@ const createDeity = catchAsync(async (req, res) => {
     const coverImagePath = new URL(coverImageUrl).pathname;
     req.body.coverImage = coverImagePath;
   }
+  if (req.body.iconImage1) {
+    const iconImageUrl = req.body.iconImage1[0];
+    const iconImagePath = new URL(iconImageUrl).pathname;
+    req.body.iconImage1 = iconImagePath;
+  }
+  if (req.body.coverImage1) {
+    const coverImageUrl = req.body.coverImage1[0];
+    const coverImagePath = new URL(coverImageUrl).pathname;
+    req.body.coverImage1 = coverImagePath;
+  }
+
   const deity = await deityService.createDeity(req.body);
   res.status(httpStatus.CREATED).send(deity);
 });

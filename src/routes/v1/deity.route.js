@@ -14,10 +14,12 @@ router
     commonUploadMiddleware([
       { name: 'coverImage', maxCount: 1 },
       { name: 'iconImage', maxCount: 1 },
+      { name: 'coverImage1', maxCount: 1 },
+      { name: 'iconImage1', maxCount: 1 },
     ]),
     deityController.createDeity
   )
-  .get( validate(deityValidation.getDeitys), deityController.queryDeitys);
+  .get(validate(deityValidation.getDeitys), deityController.queryDeitys);
 
 router
   .route('/:deityId')
