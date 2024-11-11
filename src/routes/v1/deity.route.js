@@ -1,4 +1,7 @@
 const express = require('express');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
 const { deityValidation } = require('../../validations');
@@ -6,6 +9,21 @@ const { deityController } = require('../../controllers');
 const { commonUploadMiddleware } = require('../../utils/upload');
 
 const router = express.Router();
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = path.join(__dirname, '../../uploads');
+    fs.mkdirSync(uploadPath, { recursive: true });
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+const uploads = multer({ storage });
+
+// Route for handling file upload
+router.route('/bulkupload').post(uploads.single('file'), deityController.bulkUploadFile);
 
 router
   .route('/')

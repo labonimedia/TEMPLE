@@ -1,8 +1,37 @@
 const httpStatus = require('http-status');
+const path = require('path');
+const fs = require('fs');
+const csv = require('csvtojson');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { deityService } = require('../services');
+
+const bulkUploadFile = catchAsync(async (req, res) => {
+  if (req.file) {
+    // Construct and log the file path to check if it's correct
+    const csvFilePath = path.join(__dirname, '../uploads', req.file.filename);
+
+    // Verify if file exists at this path before reading it
+    if (!fs.existsSync(csvFilePath)) {
+      throw new ApiError(httpStatus.NOT_FOUND, 'File does not exist. Check the file path.');
+    }
+
+    // Convert CSV to JSON and perform bulk upload
+    const csvJsonArray = await csv().fromFile(csvFilePath);
+    const { en_categoryId, hd_categoryId } = req.body;
+
+    const uploadResult = await deityService.bulkUpload(csvJsonArray, en_categoryId, hd_categoryId);
+
+    res.status(httpStatus.CREATED).send({
+      success: true,
+      uploadedRecords: uploadResult.successResults,
+      failedRecords: uploadResult.errorResults,
+    });
+  } else {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'File not provided');
+  }
+});
 
 const createDeity = catchAsync(async (req, res) => {
   if (req.body.iconImage) {
@@ -66,6 +95,7 @@ const deleteDeityById = catchAsync(async (req, res) => {
 });
 
 module.exports = {
+  bulkUploadFile,
   createDeity,
   queryDeitys,
   getDeityById,

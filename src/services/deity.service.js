@@ -2,6 +2,38 @@ const httpStatus = require('http-status');
 const { Deity } = require('../models');
 const ApiError = require('../utils/ApiError');
 
+const bulkUpload = async (csvJsonArray, en_categoryId, hd_categoryId) => {
+  try {
+    // Validate input data
+    if (!csvJsonArray || !csvJsonArray.length) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'CSV data array is empty or missing');
+    }
+
+    // Process each record and create in database
+    const uploadResults = await Promise.allSettled(
+      csvJsonArray.map(async (deity) => {
+        deity.en_categoryId = en_categoryId;
+        deity.hd_categoryId = hd_categoryId;
+        return await Deity.create(deity);
+      })
+    );
+
+    // Separate successful and failed uploads
+    const successResults = uploadResults.filter((result) => result.status === 'fulfilled').map((result) => result.value);
+    const errorResults = uploadResults
+      .filter((result) => result.status === 'rejected')
+      .map((result) => ({ error: result.reason.message }));
+
+    if (errorResults.length) {
+      console.warn('Some records failed to upload:', errorResults);
+    }
+
+    return { successResults, errorResults };
+  } catch (error) {
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Error processing CSV upload');
+  }
+};
+
 /**
  * Create a Deity
  * @param {Object} deityBody
@@ -67,6 +99,7 @@ const deleteDeityById = async (deityId) => {
 module.exports = {
   createDeity,
   queryDeitys,
+  bulkUpload,
   getDeityById,
   updateDeityById,
   deleteDeityById,
